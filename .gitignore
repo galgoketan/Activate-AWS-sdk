@@ -1,0 +1,6 @@
+.env
+awscli-bundle.zip
+awscli-bundle/
+node_modules/
+package-lock.json
+
