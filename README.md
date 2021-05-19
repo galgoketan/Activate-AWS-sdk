@@ -21,7 +21,9 @@ const {Consumer} = require('aws-sqs');
 // initializing sqs-consumer
 const ce = new Consumer({
   queueUrl: 'queue_url', // (queue url, Mandatory)
-  messageHandler: new NLQ().messageHandler // (attaching callback to listen messages from queue, Mandatory)
+  messageHandler: function () {
+    // attaching callback to listen messages from queue
+  }
 });
 ```
 
@@ -94,6 +96,8 @@ const ce = new Consumer({
   queueUrl: 'queue_url',
   batchSize: 10,
   pollingWaitTimeMs: 500,
-  messageHandler: new NLQ().messageHandler // attaching callback to listen messages from queue
+  messageHandler: function () {
+    // attaching callback to listen messages from queue
+  }
 });
 ```
