@@ -1,17 +1,28 @@
-# Activate-AWS-sdk
+# activate-sqs-manager
+**activate-sqs-manager** is built on top of AWS-sdk to manage internal home production stuff.
 
-**Activate-AWS-sdk** is a wrapper around Aws-sdk to manage lib on multiple projects.
+## Version 1.x Now Available
+The version 3.x of the AWS SDK for JavaScript is generally available. For more information see the [API Reference](https://github.com/galgoketan/Activate-AWS-sdk/tree/develop).
 
-Featured apis:
-[Message]
-[Consumer]
+- **Prerequisite**
 
-- **installing**
+  This package rely on aws-sdk so you need to install [aws-sdk](https://www.npmjs.com/package/aws-sdk)
+  and you also need to setup [aws-cli](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-mac.html)
+  that will help to setup ~/.aws/ profile that aws-sdk read while configuring message and consumer agent.
+
+## Table of Contents:
+* [Installing](#Installing)
+* [Configuring](#Configuring)
+* [Uses](#Uses)
+
+- **Installing**
 Using npm:
 
 ```js
-$ npm install aws-sqs
+$ npm install git@github.com:galgoketan/Activate-AWS-sdk.git
 ```
+
+- **Configuring**
 
 - **configuring sqs consumer**
 
@@ -19,8 +30,8 @@ $ npm install aws-sqs
 const {Consumer} = require('aws-sqs');
 
 // initializing sqs-consumer
-const ce = new Consumer({
-  queueUrl: 'queue_url', // (queue url, Mandatory)
+new Consumer({
+  queueUrl: 'queue_url',
   messageHandler: function () {
     // attaching callback to listen messages from queue
   }
@@ -34,20 +45,20 @@ const ce = new Consumer({
 const {Message} = require('aws-sqs');
 
 const message = new Message({
-  queueUrl: 'queue_url' // (queue url, Mandatory)
+  queueUrl: 'https://region.amazonaws.com/key/queuename'
 });
 ```
 
-- **example**
+- **Uses**
 
 ```js
 // Derived data to push
 
 const data = {
-  "email":"007sketanthakur@gmail.com",
-  "item": "pizza",
-  "itemPrice":"1000",
-  "itemQty":"2"
+  "email":"abc.xyz.com",
+  "item": "item_name",
+  "itemPrice":"item_price",
+  "itemQty":"item_qty"
 };
 
 // Defining attributes
@@ -77,25 +88,52 @@ const message = {
 // pushing it to queue
 
 const message = new Message({
-  queueUrl: 'queue_url'
+  queueUrl: 'https://region.amazonaws.com/key/queuename'
 });
 message.sendMessageToQueue(message);
+
+// Pusing batch messages to queue
+
+const batch = [
+  {
+    "email":"abc.xyz.com",
+    "item": "item_name",
+    "itemPrice":"item_price",
+    "itemQty":"item_qty"
+  },
+  {
+    "email":"abc.xyz.com",
+    "item": "item_name",
+    "itemPrice":"item_price",
+    "itemQty":"item_qty"
+  },
+  {
+    "email":"abc.xyz.com",
+    "item": "item_name",
+    "itemPrice":"item_price",
+    "itemQty":"item_qty"
+  }
+];
+message.sendBatchMessagesToQueue(batch);
+
 ```
 
-- **config defaults**
+- **Default configurations**
 ```js
 DEFAULT_BATCH_SIZE = 10;
 DEFAULT_API_VERSION = "2012-11-05";
 DEFAULT_REGION = "eu-central-1";
 POLLING_WAIT_TIME = 500;
 
-// you can paass the DEFAULT_BATCH_SIZE & POLLING_WAIT_TIME to consumer
+you can paass the DEFAULT_BATCH_SIZE & POLLING_WAIT_TIME to consumer at the configuration time
 
 // initializing sqs-consumer
-const ce = new Consumer({
-  queueUrl: 'queue_url',
-  batchSize: 10,
-  pollingWaitTimeMs: 500,
+new Consumer({
+  queueUrl: 'https://region.amazonaws.com/key/queuename',
+  batchSize: 20,
+  pollingWaitTimeMs: 1000,
+  apiVersion: '2011-12-05',
+  region: 'us-west-1',
   messageHandler: function () {
     // attaching callback to listen messages from queue
   }
