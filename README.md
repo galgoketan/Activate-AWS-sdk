@@ -119,18 +119,28 @@ message.sendBatchMessagesToQueue(batch);
 ```
 
 - **Default configurations**
+
+There are some default constant that you can pass at the configuration time to override default values.
+
+- DEFAULT_BATCH_SIZE = 10;
+  The default batch size is 10 and it can't be greater then 10.
+
+- DEFAULT_API_VERSION = "2012-11-05";
+  The default api version is "2012-11-05" and you can use any api version mentioned [here](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/locking-api-versions.html)
+
+- DEFAULT_REGION = "eu-central-1";
+  The default region is "eu-central-1" and you can define region listed [here](https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/java-dg-region-selection.html)
+
+- POLLING_WAIT_TIME = 500;
+  The duration (in milliseconds) to wait before repolling the queue and default is 500ms.
+
+  you can pass the above constant to consumer at the configuration time as below:
+
 ```js
-DEFAULT_BATCH_SIZE = 10;
-DEFAULT_API_VERSION = "2012-11-05";
-DEFAULT_REGION = "eu-central-1";
-POLLING_WAIT_TIME = 500;
-
-you can paass the DEFAULT_BATCH_SIZE & POLLING_WAIT_TIME to consumer at the configuration time
-
 // initializing sqs-consumer
 new Consumer({
   queueUrl: 'https://region.amazonaws.com/key/queuename',
-  batchSize: 20,
+  batchSize: 2,
   pollingWaitTimeMs: 1000,
   apiVersion: '2011-12-05',
   region: 'us-west-1',
